@@ -10,6 +10,7 @@ public class CppMethod {
 	ArrayList<String> statements;
 	
 	
+	@SuppressWarnings("unchecked")
 	public CppMethod(ArrayList<String> buffer) {
 		super();
 		this.modifiers = (ArrayList<String>) buffer.clone();

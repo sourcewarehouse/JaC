@@ -15,6 +15,7 @@ import javaReader.JavaParser.ClassOrInterfaceModifierContext;
 import javaReader.JavaParser.CompilationUnitContext;
 import javaReader.JavaParser.ExpressionContext;
 import javaReader.JavaParser.FormalParameterContext;
+import javaReader.JavaParser.LocalVariableDeclarationContext;
 import javaReader.JavaParser.MethodDeclarationContext;
 import javaReader.JavaParser.StatementContext;
 import javaReader.JavaParser.TypeDeclarationContext;
@@ -32,15 +33,12 @@ public class JaC {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         JavaParser parser = new JavaParser(tokens);
         ParseTree tree = parser.compilationUnit(); // parse
-        //System.out.println(tree.toStringTree(parser));
         convert(tree);
-        for(CppClass a : CppProgram.classes){
-        	System.out.println(a);
-        }
+        CppProgram.findMain();
+        CppWriter.write();
     }
 
 	private static void convert(ParseTree tree) {
-//		System.out.println(tree.getClass());
 		if(tree instanceof CompilationUnitContext){
 			for(int i = 0; i < tree.getChildCount()-1;i++){
 				convert(tree.getChild(i));
@@ -69,33 +67,39 @@ public class JaC {
 		}
 		else if(tree instanceof StatementContext){
 			if(tree.getChildCount() > 2){
-				CppProgram.classes.get(CppProgram.pointer).statementOpen = true;
-				CppProgram.classes.get(CppProgram.pointer).statementBuffer.add(tree.getChild(0).getText());
-				CppProgram.classes.get(CppProgram.pointer).statementBuffer.add("(");
-				convert(tree.getChild(1));
-				CppProgram.classes.get(CppProgram.pointer).statementBuffer.add("){");
-				convert(tree.getChild(2));
-				CppProgram.classes.get(CppProgram.pointer).statementBuffer.add("}");
-				CppProgram.classes.get(CppProgram.pointer).newStatement();
-				CppProgram.classes.get(CppProgram.pointer).statementOpen = false;
-			}
-			else if (tree.getChildCount() > 1){
-				convert(tree.getChild(0));
-			}
-			else{
-				if(CppProgram.classes.get(CppProgram.pointer).statementOpen){
-					convert(tree.getChild(0));
-					CppProgram.classes.get(CppProgram.pointer).statementBuffer.add(";");
-				}
-				else{
-					convert(tree.getChild(0));
+				if(tree.getChild(0).getText().equalsIgnoreCase("return")){
+					CppProgram.classes.get(CppProgram.pointer).statementBuffer.add("return ");
+					convert(tree.getChild(1));
 					CppProgram.classes.get(CppProgram.pointer).statementBuffer.add(";");
 					CppProgram.classes.get(CppProgram.pointer).newStatement();
 				}
+				else{
+					CppProgram.classes.get(CppProgram.pointer).statementBuffer.add(tree.getChild(0).getText());
+					CppProgram.classes.get(CppProgram.pointer).statementBuffer.add(" ( ");
+					convert(tree.getChild(1));
+					CppProgram.classes.get(CppProgram.pointer).statementBuffer.add(" ) { ");
+					CppProgram.classes.get(CppProgram.pointer).newStatement();
+					convert(tree.getChild(2));
+					CppProgram.classes.get(CppProgram.pointer).statementBuffer.add("}");
+					CppProgram.classes.get(CppProgram.pointer).newStatement();
+				}
+			}
+			else if (tree.getChildCount() > 1){
+					convert(tree.getChild(0));
+					CppProgram.classes.get(CppProgram.pointer).statementBuffer.add(";");
+					CppProgram.classes.get(CppProgram.pointer).newStatement();
+			}
+			else{
+				convert(tree.getChild(0));
 			}
 		}
 		else if(tree instanceof ExpressionContext){
 			CppProgram.classes.get(CppProgram.pointer).statementBuffer.add(tree.getText());
+		}
+		else if(tree instanceof LocalVariableDeclarationContext){	
+				CppProgram.classes.get(CppProgram.pointer).statementBuffer.add(tree.getChild(0).getText() + " " + tree.getChild(1).getText());
+				CppProgram.classes.get(CppProgram.pointer).statementBuffer.add(";");
+				CppProgram.classes.get(CppProgram.pointer).newStatement();
 		}
 		else{
 			for(int i = 0; i < tree.getChildCount();i++){

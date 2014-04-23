@@ -12,8 +12,6 @@ public class CppClass {
 	ArrayList<String> modifierBuffer = new ArrayList<String>();
 	ArrayList<String> statementBuffer = new ArrayList<String>();
 	
-	boolean statementOpen = false;
-	
 	public CppClass(String name) {
 		super();
 		this.name = name;
@@ -30,9 +28,8 @@ public class CppClass {
 	public void newStatement(){
 		String statement = "";
 		for(String s : statementBuffer){
-			statement += s + " "; 
+			statement += s; 
 		}
-		System.out.println(statement);
 		methods.get(methodP).setStatement(statement);
 		statementBuffer.clear();
 	}
@@ -56,10 +53,12 @@ public class CppClass {
 
 	@Override
 	public String toString() {
-		return "CppClass [name=" + name + ", fields=" + fields + ", methods="
-				+ methods + ", methodP=" + methodP + ", fieldP=" + fieldP
-				+ ", modifierBuffer=" + modifierBuffer + ", statementBuffer="
-				+ statementBuffer + "]";
+		String result = "";
+		result += "name:" +  this.name + "\n";
+		for(CppMethod a : this.methods){
+			result += a.toString() + "\n";
+		}
+		return result;
 	}
 
 	
