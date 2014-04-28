@@ -3,17 +3,16 @@ package jaCTranslator;
 import java.util.ArrayList;
 
 public class CppMethod {
-	ArrayList<String> modifiers;
-	String returnType;
-	String name;
+	private String modifier;
+	private String returnType;
+	private String name;
 	ArrayList<String> parameters;
 	ArrayList<String> statements;
 	
 	
-	@SuppressWarnings("unchecked")
-	public CppMethod(ArrayList<String> buffer) {
+	public CppMethod(String buffer) {
 		super();
-		this.modifiers = (ArrayList<String>) buffer.clone();
+		this.modifier = buffer;
 		this.statements = new ArrayList<String>();
 		this.parameters = new ArrayList<String>();
 	}
@@ -50,9 +49,13 @@ public class CppMethod {
 		this.statements.add(statement);
 	}
 
+	public String getModifier() {
+		return modifier;
+	}
+
 	@Override
 	public String toString() {
-		return "CppMethod [modifiers=" + modifiers + ", returnType="
+		return "CppMethod [modifiers=" + modifier + ", returnType="
 				+ returnType + ", name=" + name + ", parameters=" + parameters
 				+ ", statements=" + statements + "]";
 	}

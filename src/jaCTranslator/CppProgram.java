@@ -7,14 +7,14 @@ public class CppProgram {
 	static ArrayList<CppClass> classes = new ArrayList<CppClass>();
 	static int pointer = -1;
 	
-	public static void findMain() {
-		for(int i = 0; i < classes.size();i++){
-			for(CppMethod b : classes.get(i).methods){
-				if(b.getName().equalsIgnoreCase("main")){
-					main = i;
-				}
-			}
-		}
+	
+	public static CppClass curClass(){
+		return classes.get(pointer);
+	}
+	
+	public static void newClass(CppClass cls){
+		classes.add(cls);
+		pointer += 1;
 	}
 	
 }

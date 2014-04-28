@@ -6,10 +6,10 @@ public class CppClass {
 	String name;
 	ArrayList<CppField> fields;
 	ArrayList<CppMethod> methods;
-	int methodP = -1;
-	int fieldP = -1;
+	private int methodP = -1;
+	//private int fieldP = -1;
 	
-	ArrayList<String> modifierBuffer = new ArrayList<String>();
+	String modifierBuffer = "";
 	ArrayList<String> statementBuffer = new ArrayList<String>();
 	
 	public CppClass(String name) {
@@ -18,10 +18,14 @@ public class CppClass {
 		this.methods = new ArrayList<CppMethod>();
 		this.fields = new ArrayList<CppField>();
 	}
+	
+	public CppMethod getMethod(){
+		return methods.get(methodP);
+	}
 
 	public void newMethod() {
 		methods.add(new CppMethod(modifierBuffer));
-		modifierBuffer.clear();
+		modifierBuffer = "";
 		methodP++;
 	}
 	
@@ -32,6 +36,10 @@ public class CppClass {
 		}
 		methods.get(methodP).setStatement(statement);
 		statementBuffer.clear();
+	}
+	
+	public void addModifier(String modifier){
+		this.modifierBuffer = modifier;
 	}
 	
 	public void addToMethod(String field, String value){
