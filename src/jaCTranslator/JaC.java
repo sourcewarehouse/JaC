@@ -10,11 +10,13 @@ import java.io.InputStream;
 
 import javaReader.JavaLexer;
 import javaReader.JavaParser;
+import javaReader.JavaParser.BlockContext;
 import javaReader.JavaParser.ClassBodyDeclarationContext;
 import javaReader.JavaParser.ClassDeclarationContext;
 import javaReader.JavaParser.FormalParameterContext;
 import javaReader.JavaParser.LocalVariableDeclarationContext;
 import javaReader.JavaParser.MethodDeclarationContext;
+import javaReader.JavaParser.StatementContext;
 import javaReader.JavaParser.StatementExpressionContext;
 
 
@@ -40,8 +42,6 @@ public class JaC {
     }
 
 	private static void convert(ParseTree tree) {
-		
-		
 		if(tree instanceof ClassDeclarationContext){
 			CppProgram.newClass(new CppClass(tree.getChild(1).getText()));
 			convert(tree.getChild(2));
@@ -75,7 +75,7 @@ public class JaC {
 				CppProgram.curClass().getMethod().setStatement(tree.getChild(0).getText() + " " + tree.getChild(1).getText());
 			}
 		}
-		else if(tree instanceof StatementExpressionContext){
+		else if(tree instanceof StatementContext){
 			ParseStatement(tree);
 		}
 		else{
@@ -86,34 +86,74 @@ public class JaC {
 	}
 
 	private static void ParseStatement(ParseTree tree) {
-		switch(tree.getChild(0).getText()){
-			case "assert":
-				//TODO
-				break;
-			case "if":
-				//TODO
-				break;
-			case "for":
-				//TODO
-				break;
-			case "while":
-				//TODO
-				break;
-			case "do":
-				//TODO
-				break;
-			case "try":
-				//TODO
-				break;
-			case "switch":
-				//TODO
-				break;
-			case "return":
-				//TODO
-				break;
-			case "throw":
-				//TODO
-				break;
+		if(tree.getChild(0) instanceof BlockContext){
+			convert(tree.getChild(0));
+		}
+		else{
+			switch(tree.getChild(0).getText()){
+				case "assert":
+					CppProgram.curClass().addToMethod("statement", "assert(" + tree.getChild(1).getText() + ")");
+					break;
+				case "if":
+					if(tree.getChildCount() > 3){
+						CppProgram.curClass().addToMethod("statement", "if" + tree.getChild(1).getText() + "{");
+						convert(tree.getChild(2));
+						CppProgram.curClass().addToMethod("statement", "}");
+					}
+					else{
+						CppProgram.curClass().addToMethod("statement", "if" + tree.getChild(1).getText() + "{");
+						convert(tree.getChild(2));
+						CppProgram.curClass().addToMethod("statement", "}");
+						CppProgram.curClass().addToMethod("statement", "else{");
+						convert(tree.getChild(2));
+						CppProgram.curClass().addToMethod("statement", "}");
+					}
+					break;
+				case "for":
+					CppProgram.curClass().addToMethod("statement", "for" + tree.getChild(1).getText() + "{");
+					convert(tree.getChild(2));
+					CppProgram.curClass().addToMethod("statement", "}");
+					break;
+				case "while":
+					CppProgram.curClass().addToMethod("statement", "while" + tree.getChild(1).getText() + "{");
+					convert(tree.getChild(2));
+					CppProgram.curClass().addToMethod("statement", "}");
+					break;
+				case "do":
+					CppProgram.curClass().addToMethod("statement", "do{" );
+					convert(tree.getChild(2));
+					CppProgram.curClass().addToMethod("statement", "}while" + tree.getChild(3));
+					break;
+				case "try":
+					CppProgram.curClass().addToMethod("statement", "try{" );
+					convert(tree.getChild(1));
+					CppProgram.curClass().addToMethod("statement", "}");
+					String temp = "";
+					for(int i = 0; i < tree.getChild(2).getChildCount()-1;i++){
+						temp += tree.getChild(2).getChild(i).getText();
+					}
+					CppProgram.curClass().addToMethod("statement", temp + "{");
+					convert(tree.getChild(2).getChild(tree.getChild(2).getChildCount()-1));
+					CppProgram.curClass().addToMethod("statement","}");
+					break;
+				case "switch":
+					//TODO
+					break;
+				case "return":
+					if(tree.getChildCount() > 2){
+						CppProgram.curClass().addToMethod("statement", "return " + tree.getChild(1).getText());	
+					}
+					else{
+						CppProgram.curClass().addToMethod("statement", "return");
+					}
+					break;
+				case "throw":
+					CppProgram.curClass().addToMethod("statement", "throw " + tree.getChild(1));
+					break;
+				default:
+					CppProgram.curClass().addToMethod("statement", tree.getChild(0).getText());
+					break;
+			}
 		}
 		
 	}   
