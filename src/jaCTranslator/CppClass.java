@@ -22,6 +22,10 @@ public class CppClass {
 	public CppMethod getMethod(){
 		return methods.get(methodP);
 	}
+	
+	public void addModifier(String modifier){
+		this.modifierBuffer = modifier;
+	}
 
 	public void newMethod() {
 		methods.add(new CppMethod(modifierBuffer));
@@ -29,34 +33,16 @@ public class CppClass {
 		methodP++;
 	}
 	
-	public void newStatement(){
-		String statement = "";
-		for(String s : statementBuffer){
-			statement += s; 
-		}
-		methods.get(methodP).setStatement(statement);
-		statementBuffer.clear();
+	public void addParameterToMethod(String Type, String name, boolean isArray){
+		methods.get(methodP).setParameter(Type, name, isArray);
 	}
 	
-	public void addModifier(String modifier){
-		this.modifierBuffer = modifier;
+	public void addReturnTypeToMethod(String Type){
+		methods.get(methodP).setReturnType(Type);
 	}
 	
-	public void addToMethod(String field, String value){
-		switch(field){
-		case "returnType":
-			methods.get(methodP).setReturnType(value);
-			break;
-		case "name":
-			methods.get(methodP).setName(value);
-			break;
-		case "parameter":
-			methods.get(methodP).setParameter(value);
-			break;
-		case "statement":
-			methods.get(methodP).setStatement(value);
-			break;
-		}
+	public void addNameToMethod(String Name){
+		methods.get(methodP).setName(Name);
 	}
 
 	@Override
