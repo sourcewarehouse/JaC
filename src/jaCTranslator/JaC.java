@@ -161,18 +161,38 @@ public class JaC {
 					CppProgram.curClass().getMethod().endStatement();
 					break;
 				case "while":
+					CppProgram.curClass().getMethod().statements.add(new WhileStatement());
+					CppProgram.curClass().getMethod().MovePointer();
+					
+					
+					
+					
+					
 					
 					break;
 				case "do":
+					CppProgram.curClass().getMethod().statements.add(new DoStatement());
+					CppProgram.curClass().getMethod().MovePointer();
+					
+					
 					
 					break;
 				case "try":
+					CppProgram.curClass().getMethod().statements.add(new TryStatement());
+					CppProgram.curClass().getMethod().MovePointer();
+					
+					
+					
 					
 					break;
 				case "switch":
-					//TODO
+					CppProgram.curClass().getMethod().statements.add(new SwitchStatement());
+					CppProgram.curClass().getMethod().MovePointer();
+
+					
 					break;
 				case "return":
+					CppProgram.curClass().getMethod().statements.add(new ReturnStatement());
 					if(tree.getChildCount() > 2){
 						
 					}

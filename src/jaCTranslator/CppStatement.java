@@ -2,6 +2,7 @@ package jaCTranslator;
 
 abstract class CppStatement {
 	public abstract String toCpp();
+	public abstract String toString();
 	
 	public abstract void send(String fragment);
 }
@@ -110,6 +111,12 @@ class WhileStatement extends CppStatement{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 class DoStatement extends CppStatement{
@@ -124,6 +131,12 @@ class DoStatement extends CppStatement{
 	public void send(String fragment) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
@@ -140,6 +153,12 @@ class TryStatement extends CppStatement{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 class SwitchStatement extends CppStatement{
@@ -154,6 +173,12 @@ class SwitchStatement extends CppStatement{
 	public void send(String fragment) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
@@ -170,6 +195,12 @@ class ReturnStatement extends CppStatement{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 class ThrowStatement extends CppStatement{
@@ -184,6 +215,12 @@ class ThrowStatement extends CppStatement{
 	public void send(String fragment) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
