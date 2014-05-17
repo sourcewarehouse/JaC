@@ -100,6 +100,14 @@ class ForStatement extends CppStatement{
 }
 
 class WhileStatement extends CppStatement{
+	String Condition = "";
+	int whileEnd = -1;
+ 
+	@Override
+	public String toString() {
+		return "WhileStatement [Condition=" + Condition + ", whileEnd=" + whileEnd +"]";
+	}
+
 	@Override
 	public String toCpp() {
 		// TODO Auto-generated method stub
@@ -108,14 +116,13 @@ class WhileStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		if(Condition.equals("")){
+			Condition = fragment;
+		}
+		else if(whileEnd == -1){
+			whileEnd = Integer.parseInt(fragment);
+		}
+		 
 	}
 }
 
@@ -183,6 +190,17 @@ class SwitchStatement extends CppStatement{
 }
 
 class ReturnStatement extends CppStatement{
+ 
+	 
+	int expression = -1;
+ 
+	
+	
+	@Override
+	public String toString() {
+		return "ForStatement [expression="
+				+ expression + "]";
+	}
 
 	@Override
 	public String toCpp() {
@@ -192,14 +210,12 @@ class ReturnStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
-		// TODO Auto-generated method stub
+ 
+		  if(expression == -1){
+			expression = Integer.parseInt(fragment);
+		}
+	 
 		
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
 

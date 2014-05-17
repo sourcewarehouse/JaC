@@ -161,15 +161,24 @@ public class JaC {
 					CppProgram.curClass().getMethod().endStatement();
 					break;
 				case "while":
-					CppProgram.curClass().getMethod().statements.add(new WhileStatement());
-					CppProgram.curClass().getMethod().MovePointer();
-					
-					
-					
+					if(tree.getChildCount() > 3){
+					 
+					}
+					else{
+						CppProgram.curClass().getMethod().statements.add(new WhileStatement());
+						CppProgram.curClass().getMethod().MovePointer();
+						CppProgram.curClass().getMethod().appendStatement(tree.getChild(1).getChild(1).getText());
+						CppProgram.curClass().getMethod().newLayer();
+						convert(tree.getChild(2));
+						CppProgram.curClass().getMethod().endStatement();
+					}
 					
 					
 					
 					break;
+					
+					
+					 
 				case "do":
 					CppProgram.curClass().getMethod().statements.add(new DoStatement());
 					CppProgram.curClass().getMethod().MovePointer();
@@ -193,12 +202,14 @@ public class JaC {
 					break;
 				case "return":
 					CppProgram.curClass().getMethod().statements.add(new ReturnStatement());
-					if(tree.getChildCount() > 2){
-						
-					}
-					else{
-						
-					}
+					CppProgram.curClass().getMethod().MovePointer();
+					CppProgram.curClass().getMethod().appendStatement(tree.getChild(1).getText());
+					CppProgram.curClass().getMethod().newLayer();
+					convert(tree.getChild(1));
+					
+					CppProgram.curClass().getMethod().endStatement();
+					
+					
 					break;
 				case "throw":
 					
