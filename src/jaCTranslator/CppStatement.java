@@ -128,6 +128,15 @@ class WhileStatement extends CppStatement{
 
 class DoStatement extends CppStatement{
 
+	String Condition = "";
+	int doEnd = -1;
+ 
+	
+	@Override
+	public String toString() {
+		return "DoStatement [Condition=" + Condition + ", doEnd=" + doEnd +"]";
+	}
+
 	@Override
 	public String toCpp() {
 		// TODO Auto-generated method stub
@@ -136,14 +145,13 @@ class DoStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		if(Condition.equals("")){
+			Condition = fragment;
+		}
+		else if(doEnd == -1){
+			doEnd = Integer.parseInt(fragment);
+		}
+ 
 	}
 }
 
@@ -221,6 +229,13 @@ class ReturnStatement extends CppStatement{
 
 class ThrowStatement extends CppStatement{
 
+	int Expression = -1;
+	
+	@Override
+	public String toString() {
+		return "ThrowStatement [Expression=" + Expression + "]";
+	}
+
 	@Override
 	public String toCpp() {
 		// TODO Auto-generated method stub
@@ -229,14 +244,7 @@ class ThrowStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		Expression = Integer.parseInt(fragment);		
 	}
 }
 

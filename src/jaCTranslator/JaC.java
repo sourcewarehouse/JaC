@@ -160,9 +160,12 @@ public class JaC {
 					convert(tree.getChild(4));
 					CppProgram.curClass().getMethod().endStatement();
 					break;
+					
+				//Si:
 				case "while":
+				
 					if(tree.getChildCount() > 3){
-					 
+					 	//when?
 					}
 					else{
 						CppProgram.curClass().getMethod().statements.add(new WhileStatement());
@@ -172,9 +175,6 @@ public class JaC {
 						convert(tree.getChild(2));
 						CppProgram.curClass().getMethod().endStatement();
 					}
-					
-					
-					
 					break;
 					
 					
@@ -182,14 +182,15 @@ public class JaC {
 				case "do":
 					CppProgram.curClass().getMethod().statements.add(new DoStatement());
 					CppProgram.curClass().getMethod().MovePointer();
-					
-					
-					
+					CppProgram.curClass().getMethod().appendStatement(tree.getChild(3).getChild(1).getText());
+					CppProgram.curClass().getMethod().newLayer();
+					convert(tree.getChild(1));
+					CppProgram.curClass().getMethod().endStatement();
 					break;
 				case "try":
 					CppProgram.curClass().getMethod().statements.add(new TryStatement());
 					CppProgram.curClass().getMethod().MovePointer();
-					
+					//todo
 					
 					
 					
@@ -197,7 +198,7 @@ public class JaC {
 				case "switch":
 					CppProgram.curClass().getMethod().statements.add(new SwitchStatement());
 					CppProgram.curClass().getMethod().MovePointer();
-
+					//todo
 					
 					break;
 				case "return":
@@ -206,13 +207,14 @@ public class JaC {
 					CppProgram.curClass().getMethod().appendStatement(tree.getChild(1).getText());
 					CppProgram.curClass().getMethod().newLayer();
 					convert(tree.getChild(1));
-					
 					CppProgram.curClass().getMethod().endStatement();
-					
-					
 					break;
 				case "throw":
-					
+					CppProgram.curClass().getMethod().statements.add(new ThrowStatement());
+					CppProgram.curClass().getMethod().MovePointer();
+					CppProgram.curClass().getMethod().newLayer();
+					convert(tree.getChild(1));
+					CppProgram.curClass().getMethod().endStatement();
 					break;
 			}
 		}
