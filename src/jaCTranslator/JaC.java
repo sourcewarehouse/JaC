@@ -114,6 +114,7 @@ public class JaC {
 		else if(tree.getChild(0) instanceof StatementExpressionContext){
 			convert(tree.getChild(0));
 		}
+
 		else{
 			switch(tree.getChild(0).getText()){
 				case "assert":
