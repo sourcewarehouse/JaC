@@ -29,7 +29,7 @@ class AssertStatement extends CppStatement{
 
 class IfStatement extends CppStatement{
 
-	String Condition = "";
+	int Condition = -1;
 	int ifEnd = -1;
 	int elseEnd = -1;
 	
@@ -47,8 +47,8 @@ class IfStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
-		if(Condition.equals("")){
-			Condition = fragment;
+		if(Condition == -1){
+			Condition = Integer.parseInt(fragment);
 		}
 		else if(ifEnd == -1){
 			ifEnd = Integer.parseInt(fragment);
@@ -99,6 +99,16 @@ class ForStatement extends CppStatement{
 }
 
 class WhileStatement extends CppStatement{
+	
+	int Condition = -1;
+	int whileEnd = -1;
+	
+	@Override
+	public String toString() {
+		return "WhileStatement [Condition=" + Condition + ", whileEnd="
+				+ whileEnd + "]";
+	}
+
 	@Override
 	public String toCpp() {
 		// TODO Auto-generated method stub
@@ -107,12 +117,25 @@ class WhileStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
-		// TODO Auto-generated method stub
-		
+		if(Condition == -1){
+			Condition = Integer.parseInt(fragment);
+		}
+		else if(whileEnd == -1){
+			whileEnd = Integer.parseInt(fragment);
+		}
 	}
 }
 
 class DoStatement extends CppStatement{
+	
+	String Condition = "";
+	int whileEnd = -1;
+	
+	@Override
+	public String toString() {
+		return "DoStatement [Condition=" + Condition + ", whileEnd=" + whileEnd
+				+ "]";
+	}
 
 	@Override
 	public String toCpp() {
@@ -122,8 +145,12 @@ class DoStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
-		// TODO Auto-generated method stub
-		
+		if(Condition.equals("")){
+			Condition = fragment;
+		}
+		else if(whileEnd == -1){
+			whileEnd = Integer.parseInt(fragment);
+		}		
 	}
 }
 
@@ -158,6 +185,13 @@ class SwitchStatement extends CppStatement{
 }
 
 class ReturnStatement extends CppStatement{
+	
+	int Expression = -1;
+	
+	@Override
+	public String toString() {
+		return "ReturnStatement [Expression=" + Expression + "]";
+	}
 
 	@Override
 	public String toCpp() {
@@ -167,7 +201,9 @@ class ReturnStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
-		// TODO Auto-generated method stub
+		if(Expression == -1){
+			Expression = Integer.parseInt(fragment);
+		}
 		
 	}
 }
