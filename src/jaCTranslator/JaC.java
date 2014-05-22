@@ -114,6 +114,7 @@ public class JaC {
 		else if(tree.getChild(0) instanceof StatementExpressionContext){
 			convert(tree.getChild(0));
 		}
+
 		else{
 			switch(tree.getChild(0).getText()){
 				case "assert":
@@ -164,6 +165,8 @@ public class JaC {
 					convert(tree.getChild(4));
 					CppProgram.curClass().getMethod().endStatement();
 					break;
+					
+				//Si:
 				case "while":
 					CppProgram.curClass().getMethod().statements.add(new WhileStatement());
 					CppProgram.curClass().getMethod().MovePointer();
@@ -173,7 +176,8 @@ public class JaC {
 							CppProgram.curClass().getMethod().StatementP.size()-1)).send(String.valueOf(CppProgram.curClass().getMethod().StatementNr));
 					convert(tree.getChild(2));
 					CppProgram.curClass().getMethod().endStatement();
-					break;
+					
+					 
 				case "do":
 					CppProgram.curClass().getMethod().statements.add(new DoStatement());
 					CppProgram.curClass().getMethod().MovePointer();
@@ -183,10 +187,18 @@ public class JaC {
 					CppProgram.curClass().getMethod().endStatement();
 					break;
 				case "try":
-					//TODO
+					CppProgram.curClass().getMethod().statements.add(new TryStatement());
+					CppProgram.curClass().getMethod().MovePointer();
+					//todo
+					
+					
+					
 					break;
 				case "switch":
-					//TODO
+					CppProgram.curClass().getMethod().statements.add(new SwitchStatement());
+					CppProgram.curClass().getMethod().MovePointer();
+					//todo
+					
 					break;
 				case "return":
 					if(tree.getChildCount() > 2){
@@ -202,7 +214,11 @@ public class JaC {
 					}
 					break;
 				case "throw":
-					//TODO
+					CppProgram.curClass().getMethod().statements.add(new ThrowStatement());
+					CppProgram.curClass().getMethod().MovePointer();
+					CppProgram.curClass().getMethod().newLayer();
+					convert(tree.getChild(1));
+					CppProgram.curClass().getMethod().endStatement();
 					break;
 			}
 		}
