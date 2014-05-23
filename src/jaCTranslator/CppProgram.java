@@ -17,4 +17,25 @@ public class CppProgram {
 		pointer += 1;
 	}
 	
+	public static int findMain(){
+		for(int j = 0; j < classes.size();j++){
+			for(int i = 0; i < classes.get(j).methods.size();i++){
+				if(classes.get(j).methods.get(i).getName() == "main"){
+					return j;
+				}
+			}
+		}
+		return -1;
+	}
+	
+	public static int findMain2(){
+		for(int j = 0; j < classes.size();j++){
+			for(int i = 0; i < classes.get(j).methods.size();i++){
+				if(classes.get(j).methods.get(i).getName() == "main"){
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
 }
