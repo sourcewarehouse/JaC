@@ -14,7 +14,6 @@ import javaReader.JavaParser.BlockContext;
 import javaReader.JavaParser.ClassBodyDeclarationContext;
 import javaReader.JavaParser.ClassDeclarationContext;
 import javaReader.JavaParser.ExpressionContext;
-import javaReader.JavaParser.FieldDeclarationContext;
 import javaReader.JavaParser.FormalParameterContext;
 import javaReader.JavaParser.LocalVariableDeclarationContext;
 import javaReader.JavaParser.MethodDeclarationContext;
@@ -51,7 +50,7 @@ public class JaC {
 			convert(tree.getChild(2));
 		}
 		else if(tree instanceof ClassBodyDeclarationContext){
-			if(tree.getChild(0).getText().equals("static") || tree.getChildCount() == 1){
+			if(tree.getChild(0).getText().equals("static")){
 				CppProgram.curClass().addModifier("public");
 			}
 			else{
@@ -100,19 +99,6 @@ public class JaC {
 			CppProgram.curClass().getMethod().statements.add(new ExpressionStatement());
 			CppProgram.curClass().getMethod().MovePointer();
 			CppProgram.curClass().getMethod().appendStatement(tree.getText());
-		}
-		else if(tree instanceof FieldDeclarationContext){
-			boolean is_array = false;
-			String type;
-			if(tree.getChild(0).getChildCount() > 1){
-				is_array = true;
-				type = tree.getChild(0).getChild(0).getText();
-			}
-			else{
-				type = tree.getChild(0).getText();
-			}
-			String declaration = tree.getChild(1).getText();
-			CppProgram.curClass().newField(type, declaration, is_array);
 		}
 		else{
 			for(int i = 0; i < tree.getChildCount();i++){
@@ -179,8 +165,7 @@ public class JaC {
 					convert(tree.getChild(4));
 					CppProgram.curClass().getMethod().endStatement();
 					break;
-					
-				//Si:
+<<<<<<< HEAD
 				case "while":
 					CppProgram.curClass().getMethod().statements.add(new WhileStatement());
 					CppProgram.curClass().getMethod().MovePointer();
@@ -190,8 +175,28 @@ public class JaC {
 							CppProgram.curClass().getMethod().StatementP.size()-1)).send(String.valueOf(CppProgram.curClass().getMethod().StatementNr));
 					convert(tree.getChild(2));
 					CppProgram.curClass().getMethod().endStatement();
+					break;
+=======
+					
+				//Si:
+				case "while":
+				
+					if(tree.getChildCount() > 3){
+					 	//when?
+					}
+					else{
+						CppProgram.curClass().getMethod().statements.add(new WhileStatement());
+						CppProgram.curClass().getMethod().MovePointer();
+						CppProgram.curClass().getMethod().appendStatement(tree.getChild(1).getChild(1).getText());
+						CppProgram.curClass().getMethod().newLayer();
+						convert(tree.getChild(2));
+						CppProgram.curClass().getMethod().endStatement();
+					}
+					break;
+					
 					
 					 
+>>>>>>> b14204a9456206025433d8e6cea716bce1543b5b
 				case "do":
 					CppProgram.curClass().getMethod().statements.add(new DoStatement());
 					CppProgram.curClass().getMethod().MovePointer();
@@ -200,22 +205,26 @@ public class JaC {
 					convert(tree.getChild(1));
 					CppProgram.curClass().getMethod().endStatement();
 					break;
-					
 				case "try":
+<<<<<<< HEAD
+					//TODO
+=======
 					CppProgram.curClass().getMethod().statements.add(new TryStatement());
 					CppProgram.curClass().getMethod().MovePointer();
 					//todo
 					
 					
 					
+>>>>>>> b14204a9456206025433d8e6cea716bce1543b5b
 					break;
 				case "switch":
 					CppProgram.curClass().getMethod().statements.add(new SwitchStatement());
 					CppProgram.curClass().getMethod().MovePointer();
-					// REAAAaLLYY HARD do it last
+					//todo
 					
 					break;
 				case "return":
+<<<<<<< HEAD
 					if(tree.getChildCount() > 2){
 						CppProgram.curClass().getMethod().statements.add(new ReturnStatement());
 						CppProgram.curClass().getMethod().MovePointer();
@@ -229,11 +238,22 @@ public class JaC {
 					}
 					break;
 				case "throw":
+					//TODO
+=======
+					CppProgram.curClass().getMethod().statements.add(new ReturnStatement());
+					CppProgram.curClass().getMethod().MovePointer();
+					CppProgram.curClass().getMethod().appendStatement(tree.getChild(1).getText());
+					CppProgram.curClass().getMethod().newLayer();
+					convert(tree.getChild(1));
+					CppProgram.curClass().getMethod().endStatement();
+					break;
+				case "throw":
 					CppProgram.curClass().getMethod().statements.add(new ThrowStatement());
 					CppProgram.curClass().getMethod().MovePointer();
 					CppProgram.curClass().getMethod().newLayer();
 					convert(tree.getChild(1));
 					CppProgram.curClass().getMethod().endStatement();
+>>>>>>> b14204a9456206025433d8e6cea716bce1543b5b
 					break;
 			}
 		}

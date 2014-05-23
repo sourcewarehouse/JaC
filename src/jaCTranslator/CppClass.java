@@ -7,7 +7,6 @@ public class CppClass {
 	ArrayList<CppField> fields;
 	ArrayList<CppMethod> methods;
 	private int methodP = -1;
-	//private int fieldP = -1;
 	
 	String modifierBuffer = "";
 	ArrayList<String> statementBuffer = new ArrayList<String>();
@@ -33,6 +32,11 @@ public class CppClass {
 		methodP++;
 	}
 	
+	public void newField(String type, String declaration, boolean is_array){
+		fields.add(new CppField(modifierBuffer, type, declaration,is_array));
+		modifierBuffer = "";
+	}
+	
 	public void addParameterToMethod(String Type, String name, boolean isArray){
 		methods.get(methodP).setParameter(Type, name, isArray);
 	}
@@ -50,6 +54,10 @@ public class CppClass {
 		String result = "";
 		result += "name:" +  this.name + "\n";
 		for(CppMethod a : this.methods){
+			result += a.toString() + "\n";
+		}
+		result += "Fields:";
+		for(CppField a : this.fields){
 			result += a.toString() + "\n";
 		}
 		return result;

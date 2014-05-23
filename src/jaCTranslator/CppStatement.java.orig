@@ -2,6 +2,7 @@ package jaCTranslator;
 
 abstract class CppStatement {
 	public abstract String toCpp();
+	public abstract String toString();
 	
 	public abstract void send(String fragment);
 }
@@ -99,6 +100,7 @@ class ForStatement extends CppStatement{
 }
 
 class WhileStatement extends CppStatement{
+<<<<<<< HEAD
 	
 	int Condition = -1;
 	int whileEnd = -1;
@@ -107,6 +109,14 @@ class WhileStatement extends CppStatement{
 	public String toString() {
 		return "WhileStatement [Condition=" + Condition + ", whileEnd="
 				+ whileEnd + "]";
+=======
+	String Condition = "";
+	int whileEnd = -1;
+ 
+	@Override
+	public String toString() {
+		return "WhileStatement [Condition=" + Condition + ", whileEnd=" + whileEnd +"]";
+>>>>>>> b14204a9456206025433d8e6cea716bce1543b5b
 	}
 
 	@Override
@@ -117,12 +127,21 @@ class WhileStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
+<<<<<<< HEAD
 		if(Condition == -1){
 			Condition = Integer.parseInt(fragment);
+=======
+		if(Condition.equals("")){
+			Condition = fragment;
+>>>>>>> b14204a9456206025433d8e6cea716bce1543b5b
 		}
 		else if(whileEnd == -1){
 			whileEnd = Integer.parseInt(fragment);
 		}
+<<<<<<< HEAD
+=======
+		 
+>>>>>>> b14204a9456206025433d8e6cea716bce1543b5b
 	}
 }
 
@@ -137,6 +156,15 @@ class DoStatement extends CppStatement{
 				+ "]";
 	}
 
+	String Condition = "";
+	int doEnd = -1;
+ 
+	
+	@Override
+	public String toString() {
+		return "DoStatement [Condition=" + Condition + ", doEnd=" + doEnd +"]";
+	}
+
 	@Override
 	public String toCpp() {
 		// TODO Auto-generated method stub
@@ -148,9 +176,16 @@ class DoStatement extends CppStatement{
 		if(Condition.equals("")){
 			Condition = fragment;
 		}
+<<<<<<< HEAD
 		else if(whileEnd == -1){
 			whileEnd = Integer.parseInt(fragment);
 		}		
+=======
+		else if(doEnd == -1){
+			doEnd = Integer.parseInt(fragment);
+		}
+ 
+>>>>>>> b14204a9456206025433d8e6cea716bce1543b5b
 	}
 }
 
@@ -167,6 +202,12 @@ class TryStatement extends CppStatement{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 class SwitchStatement extends CppStatement{
@@ -182,15 +223,34 @@ class SwitchStatement extends CppStatement{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 class ReturnStatement extends CppStatement{
+<<<<<<< HEAD
 	
 	int Expression = -1;
 	
 	@Override
 	public String toString() {
 		return "ReturnStatement [Expression=" + Expression + "]";
+=======
+ 
+	 
+	int expression = -1;
+ 
+	
+	
+	@Override
+	public String toString() {
+		return "ForStatement [expression="
+				+ expression + "]";
+>>>>>>> b14204a9456206025433d8e6cea716bce1543b5b
 	}
 
 	@Override
@@ -201,17 +261,30 @@ class ReturnStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
+<<<<<<< HEAD
 		if(Expression == -1){
 			Expression = Integer.parseInt(fragment);
 		}
+=======
+ 
+		  if(expression == -1){
+			expression = Integer.parseInt(fragment);
+		}
+	 
+>>>>>>> b14204a9456206025433d8e6cea716bce1543b5b
 		
 	}
 }
 
 class ThrowStatement extends CppStatement{
-	
+
 	int Expression = -1;
 	
+	@Override
+	public String toString() {
+		return "ThrowStatement [Expression=" + Expression + "]";
+	}
+
 	@Override
 	public String toCpp() {
 		// TODO Auto-generated method stub
@@ -220,20 +293,8 @@ class ThrowStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
-		if(Expression == -1){
-			Expression = Integer.parseInt(fragment);
-		}
-		
+		Expression = Integer.parseInt(fragment);		
 	}
-
-	@Override
-	public String toString() {
-		return "ThrowStatement [Expression=" + Expression + "]";
-	}
-	
-	
-	
-	
 }
 
 class ExpressionStatement extends CppStatement{
