@@ -63,6 +63,68 @@ public class CppClass {
 		return result;
 	}
 
+	public String CppHeader() {
+		String result = "";
+		result += "public:\n";
+		for(int i = 0; i < fields.size();i++){
+			if(fields.get(i).ClassModifier.equals("public")){
+				result += fields.get(i).toCpp();
+			}
+		}
+		for(int i = 0; i < methods.size();i++){
+			if(methods.get(i).getModifier().equals("public")){
+				result += methods.get(i).getReturnType() + " ";
+				result += methods.get(i).getName() + "(";
+				for(int j = 0; j < methods.get(i).parameters.size();j++){
+					result += methods.get(i).parameters.get(j).toCpp();
+					if(j + 1 < methods.get(i).parameters.size()){
+						result += ",";
+					}
+				}
+				result += ");\n";
+			}
+		}
+		result += "private:\n";
+		for(int i = 0; i < fields.size();i++){
+			if(fields.get(i).ClassModifier.equals("private")){
+				result += fields.get(i).toCpp();
+			}
+		}
+		for(int i = 0; i < methods.size();i++){
+			if(methods.get(i).getModifier().equals("private")){
+				result += methods.get(i).getReturnType() + " ";
+				result += methods.get(i).getName() + "(";
+				for(int j = 0; j < methods.get(i).parameters.size();j++){
+					result += methods.get(i).parameters.get(j).toCpp();
+					if(j + 1 < methods.get(i).parameters.size()){
+						result += ",";
+					}
+					result += ");\n";
+				}		
+			}
+		}
+		result += "protected:\n";
+		for(int i = 0; i < fields.size();i++){
+			if(fields.get(i).ClassModifier.equals("protected")){
+				result += fields.get(i).toCpp();
+			}
+		}
+		for(int i = 0; i < methods.size();i++){
+			if(methods.get(i).getModifier().equals("protected")){
+				result += methods.get(i).getReturnType() + " ";
+				result += methods.get(i).getName() + "(";
+				for(int j = 0; j < methods.get(i).parameters.size();j++){
+					result += methods.get(i).parameters.get(j).toCpp();
+					if(j + 1 < methods.get(i).parameters.size()){
+						result += ",";
+					}
+					result += ");\n";
+				}		
+			}
+		}
+		return result;
+	}
+
 	
 	
 	

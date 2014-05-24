@@ -39,6 +39,7 @@ public class JaC {
         //------------------------------
         
         convert(tree);
+        CppWriter.convert();
         for(CppClass c : CppProgram.classes){
         	System.out.println(c);
         }

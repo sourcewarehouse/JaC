@@ -1,5 +1,7 @@
 package jaCTranslator;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 public class CppParameter {
 	private String Type;
 	private String name;
@@ -15,6 +17,17 @@ public class CppParameter {
 	public String toString() {
 		return "CppParameter [Type=" + Type + ", name=" + name + ", array="
 				+ array + "]";
+	}
+
+	public String toCpp() {
+		String result = "";
+		if(array){
+			result += Type + " " + name + "[]";
+		}
+		else{
+			result += Type + " " + name;
+		}
+		return result;
 	}
 	
 }

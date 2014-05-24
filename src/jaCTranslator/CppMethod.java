@@ -10,6 +10,8 @@ public class CppMethod {
 	private String name;
 	ArrayList<CppParameter> parameters;
 	ArrayList<CppStatement> statements;
+	public int writeP = 0;
+	public boolean standalone = true;
 	
 	
 	public CppMethod(String buffer) {
@@ -80,6 +82,14 @@ public class CppMethod {
 		return "CppMethod [modifiers=" + modifier + ", returnType="
 				+ returnType + ", name=" + name + ", parameters=" + parameters
 				+ ", statements=" + statements + "]";
+	}
+
+	public String toCpp() {
+		String result = "";
+		while(writeP < this.statements.size()){
+			result += this.statements.get(writeP).toCpp(this);
+		}
+		return result;
 	}
 		
 }

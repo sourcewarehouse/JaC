@@ -20,6 +20,17 @@ public class CppField {
 				+ ", Declaration=" + Declaration + ", is_array=" + is_array
 				+ "]";
 	}
+
+	public String toCpp() {
+		String result = "";
+		if(is_array){
+			result += type + " " + Declaration + "[];\n";
+		}
+		else{
+			result += type + " " + Declaration + ";\n";
+		}
+		return result;
+	}
 	
 	
 }

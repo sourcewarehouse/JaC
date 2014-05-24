@@ -20,7 +20,7 @@ public class CppProgram {
 	public static int findMain(){
 		for(int j = 0; j < classes.size();j++){
 			for(int i = 0; i < classes.get(j).methods.size();i++){
-				if(classes.get(j).methods.get(i).getName() == "main"){
+				if(classes.get(j).methods.get(i).getName().equals("main")){
 					return j;
 				}
 			}
@@ -31,7 +31,7 @@ public class CppProgram {
 	public static int findMain2(){
 		for(int j = 0; j < classes.size();j++){
 			for(int i = 0; i < classes.get(j).methods.size();i++){
-				if(classes.get(j).methods.get(i).getName() == "main"){
+				if(classes.get(j).methods.get(i).getName().equals("main")){
 					return i;
 				}
 			}
