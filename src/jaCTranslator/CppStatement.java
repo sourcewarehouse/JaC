@@ -128,7 +128,7 @@ class WhileStatement extends CppStatement{
 
 class DoStatement extends CppStatement{
 	
-	String Condition = "";
+	int Condition = -1;
 	int whileEnd = -1;
 	
 	@Override
@@ -145,8 +145,8 @@ class DoStatement extends CppStatement{
 
 	@Override
 	public void send(String fragment) {
-		if(Condition.equals("")){
-			Condition = fragment;
+		if(Condition == -1){
+			Condition = Integer.parseInt(fragment);
 		}
 		else if(whileEnd == -1){
 			whileEnd = Integer.parseInt(fragment);

@@ -195,8 +195,10 @@ public class JaC {
 				case "do":
 					CppProgram.curClass().getMethod().statements.add(new DoStatement());
 					CppProgram.curClass().getMethod().MovePointer();
-					CppProgram.curClass().getMethod().appendStatement(tree.getChild(3).getChild(1).getText());
 					CppProgram.curClass().getMethod().newLayer();
+					convert(tree.getChild(3).getChild(1));
+					CppProgram.curClass().getMethod().statements.get(CppProgram.curClass().getMethod().StatementP.get(
+							CppProgram.curClass().getMethod().StatementP.size()-1)).send(String.valueOf(CppProgram.curClass().getMethod().StatementNr));
 					convert(tree.getChild(1));
 					CppProgram.curClass().getMethod().endStatement();
 					break;
