@@ -18,24 +18,12 @@ import javax.swing.JButton;
 
 public class Window extends JFrame {
 
-	private JPanel contentPane;
-
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Window frame = new Window();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+ 
 	/**
 	 * Create the frame.
 	 */
@@ -71,7 +59,7 @@ public class Window extends JFrame {
 				String chosenFile = chooser.getSelectedFile().toString();
 				chosenFile = chosenFile.substring(chosenFile.lastIndexOf("\\")+1);
 				try {
-					JaC.main(new String[] {chosenFile});
+					JaC.trun(chosenFile);
 					lblNewLabel.setText("C++ fail(id) loodud projektikausta!");
 				} catch (IOException e1) {
 					e1.printStackTrace();

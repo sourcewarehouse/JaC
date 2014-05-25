@@ -4,6 +4,8 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import gui.Window;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,10 +29,13 @@ import javaReader.JavaParser.VariableDeclaratorContext;
 public class JaC {
 	
     public static void main(String[] args) throws IOException {
-    	//standard parsing of text with ANTLR generated parser 
-        String inputFile = "C:\\Users\\S\\git\\JaC\\programm.java";
-        if ( args.length>0 ) inputFile = args[0];
-        InputStream is = System.in;
+    	Window frame = new Window();
+		frame.setVisible(true);
+        
+    }
+    
+    public static void trun(String inputFile) throws IOException {
+    	InputStream is = System.in;
         if ( inputFile!=null ) is = new FileInputStream(inputFile);
         ANTLRInputStream input = new ANTLRInputStream(is);
         JavaLexer lexer = new JavaLexer(input);
@@ -44,8 +49,9 @@ public class JaC {
         for(CppClass c : CppProgram.classes){
         	System.out.println(c);
         }
+    	
     }
-
+    
 	private static void convert(ParseTree tree) {
 		
 		if(tree instanceof ClassDeclarationContext){
