@@ -73,7 +73,6 @@ class IfStatement extends CppStatement{
 			result += "}\n";
 		}
 		else{
-			System.out.println("FREAKING SUCCESSS");
 			cppMethod.standalone = false;
 			result += "if(" + cppMethod.statements.get(Condition).toCpp(cppMethod) + "){\n";
 			cppMethod.standalone = true;
@@ -132,9 +131,9 @@ class ForStatement extends CppStatement{
 		cppMethod.writeP += 1;
 		String result = "";
 		cppMethod.standalone = false;
-		result += "for("+ cppMethod.statements.get(forInit).toCpp(cppMethod) + ";";
-		result += cppMethod.statements.get(expression).toCpp(cppMethod) + ";";
-		result += cppMethod.statements.get(forUpdate).toCpp(cppMethod) + "){\n";
+		result += "for("+ cppMethod.statements.get(cppMethod.writeP).toCpp(cppMethod) + ";";
+		result += cppMethod.statements.get(cppMethod.writeP).toCpp(cppMethod) + ";";
+		result += cppMethod.statements.get(cppMethod.writeP).toCpp(cppMethod) + "){\n";
 		cppMethod.standalone = true;
 		while(cppMethod.writeP <= forEnd){
 			result += cppMethod.statements.get(cppMethod.writeP).toCpp(cppMethod);
@@ -417,27 +416,50 @@ class LocalVariableDeclarationStatement extends CppStatement{
 			result += Type + " " + Name + ";\n";
 		}
 		else{
-			cppMethod.standalone = false;
-			String temp = cppMethod.statements.get(variableInitializer).toCpp(cppMethod);
-			if(temp.contains(Type) && temp.contains("new")){
-				result += Type + " " + Name + "(";
-				String[] pieces = temp.split(Type);
-				if(pieces.length == 2){
-					for(int i = 1; i < pieces[1].length();i++){
-						if(pieces[1].charAt(i) != ';'){
-							result += pieces[1].charAt(i);
+			if(cppMethod.standalone == false){
+				String temp = cppMethod.statements.get(variableInitializer).toCpp(cppMethod);
+				if(temp.contains(Type) && temp.contains("new")){
+					result += Type + " " + Name + "(";
+					String[] pieces = temp.split(Type);
+					if(pieces.length == 2){
+						for(int i = 1; i < pieces[1].length();i++){
+							if(pieces[1].charAt(i) != ';'){
+								result += pieces[1].charAt(i);
+							}
 						}
 					}
+					else{
+						result += ">>> UNEXPECTED SYMBOLS <<<";
+					}
+					result += ";\n";
 				}
 				else{
-					result += ">>> UNEXPECTED SYMBOLS <<<";
+					result += Type + " " + Name + " = " + temp;
 				}
-				result += ";\n";
 			}
 			else{
-				result += Type + " " + Name + " = " + temp + ";\n";
+				cppMethod.standalone = false;
+				String temp = cppMethod.statements.get(variableInitializer).toCpp(cppMethod);
+				if(temp.contains(Type) && temp.contains("new")){
+					result += Type + " " + Name + "(";
+					String[] pieces = temp.split(Type);
+					if(pieces.length == 2){
+						for(int i = 1; i < pieces[1].length();i++){
+							if(pieces[1].charAt(i) != ';'){
+								result += pieces[1].charAt(i);
+							}
+						}
+					}
+					else{
+						result += ">>> UNEXPECTED SYMBOLS <<<";
+					}
+					result += ";\n";
+				}
+				else{
+					result += Type + " " + Name + " = " + temp + ";\n";
+				}
+				cppMethod.standalone = true;
 			}
-			cppMethod.standalone = true;
 		}
 		return result;
 	}

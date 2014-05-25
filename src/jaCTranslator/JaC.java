@@ -28,7 +28,7 @@ public class JaC {
 	
     public static void main(String[] args) throws IOException {
     	//standard parsing of text with ANTLR generated parser 
-        String inputFile = "programm.java";
+        String inputFile = "C:\\Users\\S\\git\\JaC\\programm.java";
         if ( args.length>0 ) inputFile = args[0];
         InputStream is = System.in;
         if ( inputFile!=null ) is = new FileInputStream(inputFile);
@@ -192,7 +192,7 @@ public class JaC {
 					CppProgram.curClass().getMethod().endStatement();
 					break;
 					
-				//Si:
+
 				case "while":
 					CppProgram.curClass().getMethod().statements.add(new WhileStatement());
 					CppProgram.curClass().getMethod().MovePointer();
@@ -202,6 +202,7 @@ public class JaC {
 							CppProgram.curClass().getMethod().StatementP.size()-1)).send(String.valueOf(CppProgram.curClass().getMethod().StatementNr));
 					convert(tree.getChild(2));
 					CppProgram.curClass().getMethod().endStatement();
+					break;
 					
 					 
 				case "do":
@@ -218,15 +219,14 @@ public class JaC {
 				case "try":
 					CppProgram.curClass().getMethod().statements.add(new TryStatement());
 					CppProgram.curClass().getMethod().MovePointer();
-					//todo
-					
+
 					
 					
 					break;
 				case "switch":
 					CppProgram.curClass().getMethod().statements.add(new SwitchStatement());
 					CppProgram.curClass().getMethod().MovePointer();
-					// REAAAaLLYY HARD do it last
+
 					
 					break;
 				case "return":
