@@ -9,7 +9,12 @@ public class CppField {
 	public CppField(String classModifier, String type, String declaration,boolean is_array) {
 		super();
 		ClassModifier = classModifier;
-		this.type = type;
+		if(type.equals("boolean")){
+			this.type = "bool";
+		}
+		else{
+			this.type = type;
+		}
 		Declaration = declaration;
 		this.is_array = is_array;
 	}

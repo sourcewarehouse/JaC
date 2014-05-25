@@ -13,7 +13,6 @@ public class CppWriter {
 		main = CppProgram.findMain();
 		writeClasses();
 		writeMain();
-		
 	}
 	
 	
@@ -25,7 +24,7 @@ public class CppWriter {
 					String result = "";
 					result += "class " + CppProgram.classes.get(i).name + "{\n";
 					result += CppProgram.classes.get(i).CppHeader();
-					result += "}";
+					result += "};";
 					out.write(result);
 					out.close();
 					files.add(CppProgram.classes.get(i).name + ".h");
@@ -77,6 +76,7 @@ public class CppWriter {
 			FileWriter out = new FileWriter(new File("main.cpp"));
 			String result = "";
 			CppClass mainClass = CppProgram.classes.get(main);
+			out.write("#include <iostream>\n");
 			for(int i = 0; i < files.size();i++){
 				out.write("#include \"" + files.get(i) + "\"\n");	
 			}

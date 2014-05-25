@@ -33,7 +33,12 @@ public class CppMethod {
 	}
 
 	public void setReturnType(String returnType) {
-		this.returnType = returnType;
+		if(returnType.equals("boolean")){
+			this.returnType = "bool";
+		}
+		else{
+			this.returnType = returnType;
+		}
 	}
 
 	public String getName() {

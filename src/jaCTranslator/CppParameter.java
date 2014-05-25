@@ -8,7 +8,12 @@ public class CppParameter {
 	private boolean array;
 	
 	public CppParameter(String Type, String name, boolean isArray){
-		this.Type = Type;
+		if(Type.equals("boolean")){
+			this.Type = "bool";
+		}
+		else{
+			this.Type = Type;
+		}
 		this.name = name;
 		array = isArray;
 	}

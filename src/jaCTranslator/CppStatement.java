@@ -73,6 +73,7 @@ class IfStatement extends CppStatement{
 			result += "}\n";
 		}
 		else{
+			System.out.println("FREAKING SUCCESSS");
 			cppMethod.standalone = false;
 			result += "if(" + cppMethod.statements.get(Condition).toCpp(cppMethod) + "){\n";
 			cppMethod.standalone = true;
@@ -338,6 +339,7 @@ class ExpressionStatement extends CppStatement{
 	public String toCpp(CppMethod cppMethod) {
 		cppMethod.writeP += 1;
 		String result = "";
+		analyze(expression);
 		if(cppMethod.standalone){
 			result += expression + ";\n";
 		}
@@ -346,6 +348,30 @@ class ExpressionStatement extends CppStatement{
 		}
 		
 		return result;
+	}
+
+
+	private void analyze(String text) {
+		if(text.contains("System.out.println")){
+			String[] pieces = text.split("System.out.println");
+			String temp = "";
+			int counter = 1;
+			for(int i = 1; i < pieces[1].length(); i++){
+				if(pieces[1].charAt(i) == ')'){
+					counter--;
+					if(counter == 0){
+						break;
+					}
+				}
+				if(pieces[1].charAt(i) == '+'){
+					temp += " << ";
+					continue;
+				}
+				temp += pieces[1].charAt(i);
+			}
+			expression = "cout << " + temp + " << endl";
+		}
+		
 	}
 }
 
@@ -367,7 +393,12 @@ class LocalVariableDeclarationStatement extends CppStatement{
 	@Override
 	public void send(String fragment) {
 		if(Type.equals("")){
-			Type = fragment;
+			if(fragment.equals("boolean")){
+				Type = "bool";
+			}
+			else{
+				Type = fragment;
+			}
 		}
 		else if(Name.equals("")){
 			Name = fragment;
@@ -391,8 +422,6 @@ class LocalVariableDeclarationStatement extends CppStatement{
 			if(temp.contains(Type) && temp.contains("new")){
 				result += Type + " " + Name + "(";
 				String[] pieces = temp.split(Type);
-				System.out.println(pieces[0]);
-				System.out.println(pieces[1]);
 				if(pieces.length == 2){
 					for(int i = 1; i < pieces[1].length();i++){
 						if(pieces[1].charAt(i) != ';'){
@@ -406,7 +435,7 @@ class LocalVariableDeclarationStatement extends CppStatement{
 				result += ";\n";
 			}
 			else{
-				result += Type + " " + Name + " = " + cppMethod.statements.get(variableInitializer).toCpp(cppMethod) + ";\n";
+				result += Type + " " + Name + " = " + temp + ";\n";
 			}
 			cppMethod.standalone = true;
 		}
