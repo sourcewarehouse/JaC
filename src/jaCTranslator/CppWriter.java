@@ -29,7 +29,40 @@ public class CppWriter {
 					out.write(result);
 					out.close();
 					files.add(CppProgram.classes.get(i).name + ".h");
+					FileWriter out2 = new FileWriter(new File(CppProgram.classes.get(i).name + ".cpp"));
+					result = "";
+					result += "#include \"" + CppProgram.classes.get(i).name + ".h\"\n";
+					for(int j = 0; j < CppProgram.classes.get(i).constructors.size();j++){
+						CppMethod cur = CppProgram.classes.get(i).constructors.get(j);
+						result += CppProgram.classes.get(i).name + "::" + cur.getName() + "(";
+						for (int k = 0; k < cur.parameters.size(); k++){
+							result += cur.parameters.get(k).toCpp();
+							if(k + 1 < cur.parameters.size()){
+								result += ",";
+							}
+						}
+						result += "){\n";
+						result += cur.toCpp();
+						result += "}\n";
+						
+					}
+					for(int j = 0; j < CppProgram.classes.get(i).methods.size();j++){
+						CppMethod cur = CppProgram.classes.get(i).methods.get(j);
+						result += cur.getReturnType() + " " + CppProgram.classes.get(i).name + "::" + cur.getName() + "(";
+						for (int k = 0; k < cur.parameters.size(); k++){
+							result += cur.parameters.get(k).toCpp();
+							if(k + 1 < cur.parameters.size()){
+								result += ",";
+							}
+						}
+						result += "){\n";
+						result += cur.toCpp();
+						result += "}\n";
+					}
+					out2.write(result);
+					out2.close();
 				} catch (IOException e) {
+					System.out.println("This is not good");
 					e.printStackTrace();
 				}
 			}

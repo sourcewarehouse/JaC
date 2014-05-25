@@ -387,7 +387,27 @@ class LocalVariableDeclarationStatement extends CppStatement{
 		}
 		else{
 			cppMethod.standalone = false;
-			result += Type + " " + Name + " = " + cppMethod.statements.get(variableInitializer) + ";\n";
+			String temp = cppMethod.statements.get(variableInitializer).toCpp(cppMethod);
+			if(temp.contains(Type) && temp.contains("new")){
+				result += Type + " " + Name + "(";
+				String[] pieces = temp.split(Type);
+				System.out.println(pieces[0]);
+				System.out.println(pieces[1]);
+				if(pieces.length == 2){
+					for(int i = 1; i < pieces[1].length();i++){
+						if(pieces[1].charAt(i) != ';'){
+							result += pieces[1].charAt(i);
+						}
+					}
+				}
+				else{
+					result += ">>> UNEXPECTED SYMBOLS <<<";
+				}
+				result += ";\n";
+			}
+			else{
+				result += Type + " " + Name + " = " + cppMethod.statements.get(variableInitializer).toCpp(cppMethod) + ";\n";
+			}
 			cppMethod.standalone = true;
 		}
 		return result;

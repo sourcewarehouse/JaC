@@ -13,6 +13,7 @@ import javaReader.JavaParser;
 import javaReader.JavaParser.BlockContext;
 import javaReader.JavaParser.ClassBodyDeclarationContext;
 import javaReader.JavaParser.ClassDeclarationContext;
+import javaReader.JavaParser.ConstructorDeclarationContext;
 import javaReader.JavaParser.ExpressionContext;
 import javaReader.JavaParser.FieldDeclarationContext;
 import javaReader.JavaParser.FormalParameterContext;
@@ -59,6 +60,16 @@ public class JaC {
 				CppProgram.curClass().addModifier(tree.getChild(0).getText());
 			}
 			convert(tree.getChild(tree.getChildCount() - 1));
+		}
+		else if(tree instanceof ConstructorDeclarationContext){
+			CppProgram.curClass().constructor = true;
+			CppProgram.curClass().newConstructor();
+			CppProgram.curClass().addNameToMethod(tree.getChild(0).getText());
+			if(tree.getChild(1).getChildCount() > 2){
+				convert(tree.getChild(1));
+			}
+			convert(tree.getChild(2));
+			CppProgram.curClass().constructor = false;
 		}
 		else if(tree instanceof MethodDeclarationContext){
 			CppProgram.curClass().newMethod();

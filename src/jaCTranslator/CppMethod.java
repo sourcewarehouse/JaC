@@ -12,6 +12,7 @@ public class CppMethod {
 	ArrayList<CppStatement> statements;
 	public int writeP = 0;
 	public boolean standalone = true;
+	public boolean constructor = false;
 	
 	
 	public CppMethod(String buffer) {
@@ -21,6 +22,12 @@ public class CppMethod {
 		this.parameters = new ArrayList<CppParameter>();
 	}
 	
+	public CppMethod(boolean a) {
+		constructor = a;
+		this.statements = new ArrayList<CppStatement>();
+		this.parameters = new ArrayList<CppParameter>();
+	}
+
 	public String getReturnType() {
 		return returnType;
 	}
@@ -79,9 +86,15 @@ public class CppMethod {
 
 	@Override
 	public String toString() {
-		return "CppMethod [modifiers=" + modifier + ", returnType="
-				+ returnType + ", name=" + name + ", parameters=" + parameters
-				+ ", statements=" + statements + "]";
+		if(constructor){
+			return "CppMethod [name=" + name + ", parameters=" + parameters
+					+ ", statements=" + statements + "]";
+		}
+		else{	
+			return "CppMethod [modifiers=" + modifier + ", returnType="
+					+ returnType + ", name=" + name + ", parameters=" + parameters
+					+ ", statements=" + statements + "]";
+		}
 	}
 
 	public String toCpp() {
