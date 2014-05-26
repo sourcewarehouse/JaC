@@ -57,7 +57,7 @@ public class Window extends JFrame {
 				if (choice != JFileChooser.APPROVE_OPTION) return;
 
 				String chosenFile = chooser.getSelectedFile().toString();
-				chosenFile = chosenFile.substring(chosenFile.lastIndexOf("\\")+1);
+				// chosenFile = chosenFile.substring(chosenFile.lastIndexOf("\\")+1);
 				try {
 					JaC.trun(chosenFile);
 					lblNewLabel.setText("C++ fail(id) loodud projektikausta!");
